@@ -3,8 +3,8 @@
 #include <stdio.h>
 #include "types.h"
 
-int yylex();
-int yyerror (char *);
+extern int yylex();
+extern int yyerror (char *);
 
 %}
 
