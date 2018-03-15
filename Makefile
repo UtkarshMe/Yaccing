@@ -17,7 +17,7 @@ all: 			${PROGRAM}
 				${CC} ${CC_FLAGS} -c $*.c -o $@ -O ${CC_LFLAGS}
 
 y.tab.c: 		parse.y
-				${CC_YACC} ${Y_FLAGS} parse.y
+				${CC_YACC} ${YFLAGS} parse.y
 
 lex.yy.c: 		lex.l
 				${CC_LEX} lex.l
