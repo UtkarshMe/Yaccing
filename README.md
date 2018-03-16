@@ -4,16 +4,17 @@ _Stop yacking, start yaccing!_
 ### What is what
     
     parse.y         : define the grammar
-    parse.tab.c     : yacc generated grammar parser
     lex.l           : token definitions
+    types.h         : datatypes for the parser
+    util.c/util.h   : utility functions
+    y.tab.c/y.tab.h : yacc generated grammar parser
     lex.yy.c        : lex generated token parser
-    tokens.h        : token symbols
 
 
 ### How to
 ```bash
 $ make
-$ ./a.out
+$ ./bibtex_parser
 ```
 
 ### Author
