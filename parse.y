@@ -3,36 +3,42 @@
 #include <stdio.h>
 #include <string.h>
 #include "types.h"
+#include "util.h"
 
 extern int yylex();
 extern int yyerror (char *);
 
-#define YYDEBUG 1
+int size = 0;
 
 %}
 
 %union {
-    int     ival;
-    char    sval[10000];
-    Entry   entry_val;
-    Field   field_val;
+    int         ival;
+    char        sval[10000];
+    Entry       entry_val;
+    Field       field_val;
+    Field       field_list[10];
 };
 
 %token  <ival>      SYM_AMPERSAND BRACE_OPEN BRACE_CLOSE SYM_COMMA SYM_EQUAL
 %token  <sval>      IDENTIFIER
 
 %type   <sval>      name key string string_all
-%type   <field_val> field fields
+%type   <field_val> field
+%type   <field_list> fields
 %type   <entry_val> entry
 
 
 %%
 
 bibtex:         /* nothing */
+                        {
+                        }
                 | entry bibtex
                         {
-                            printf("\nname: %s\nkey: %s\nfield: \nvalue: \n\n",
-                                $1.name, $1.key);//, $1.fields -> name, $1.fields -> value);
+                            entry_show($1);
+                            free($1.name);
+                            free($1.key);
                         }
                 ;
 
@@ -40,7 +46,11 @@ entry:          SYM_AMPERSAND name BRACE_OPEN key SYM_COMMA fields BRACE_CLOSE
                         {
                             $$.name   = strdup($2);
                             $$.key    = strdup($4);
-                            /*$$.fields = &$6;*/
+                            for (int i = 0; i < size; i++) {
+                                strcpy($$.fields[i].name, $6[i].name);
+                                strcpy($$.fields[i].value, $6[i].value);
+                            }
+                            $$.size = size;
                         }
                 ;
 
@@ -58,24 +68,35 @@ key:            IDENTIFIER
 
 fields:         field SYM_COMMA fields
                         {
-                            $$.name = strdup($1.name);
+                            int i = 0;
+                            while (i < size) {
+                                strcpy($$[i].name, $3[i].name);
+                                strcpy($$[i].value, $3[i].value);
+                                i++;
+                            }
+                            strcpy($$[i].name, $1.name);
+                            strcpy($$[i].value, $1.value);
+                            size++;
                         }
                 | field
                         {
-                            $$.name = strdup($1.name);
+                            size = 0;
+                            strcpy($$[size].name, $1.name);
+                            strcpy($$[size].value, $1.value);
+                            size++;
                         }
                 ;
 
 field:          IDENTIFIER SYM_EQUAL string
                         {
-                            $$.name  = strdup($1);
-                            $$.value = strdup($3);
+                            strcpy($$.name, $1);
+                            strcpy($$.value, $3);
                         }
                 ;
 
 string:         IDENTIFIER string
                         {
-                            sprintf($$, "%s %s", strdup($1), strdup($2));
+                            sprintf($$, "%s %s", $1, $2);
                         }
                 | IDENTIFIER
                         {
@@ -84,7 +105,6 @@ string:         IDENTIFIER string
                 | BRACE_OPEN string_all BRACE_CLOSE
                         {
                             strcpy($$, $2);
-                            printf("entry: %s", $2);
                         }
                 ;
 
@@ -94,11 +114,11 @@ string_all:     IDENTIFIER
                         }
                 | SYM_COMMA string_all
                         {
-                            sprintf($$, ", %s", strdup($2));
+                            sprintf($$, ", %s", $2);
                         }
                 | IDENTIFIER string_all
                         {
-                            sprintf($$, "%s %s", strdup($1), strdup($2));
+                            sprintf($$, "%s %s", $1, $2);
                         }
                 | /* empty */
                         {

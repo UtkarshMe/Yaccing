@@ -1,14 +1,14 @@
 PROGRAM 		= bibtex_parser
 
 CC 				= gcc
-CC_FLAGS 		= -Wall -Wno-unused-function
+CC_FLAGS 		= -Wall -Wno-unused-function -Wno-format-overflow -Wpedantic -g
 CC_LFLAGS		= -lfl
 CC_LEX			= lex
 CC_YACC 		= yacc
 YFLAGS 			= -d
 
-SRCS 			= y.tab.c lex.yy.c
-OBJS 			= y.tab.o lex.yy.o
+SRCS 			= y.tab.c lex.yy.c util.c
+OBJS 			= y.tab.o lex.yy.o util.o
 INCLUDE_DIR		= .
 
 all: 			${PROGRAM}
