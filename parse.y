@@ -106,6 +106,10 @@ string:         IDENTIFIER string
                         {
                             strcpy($$, $2);
                         }
+                | BRACE_OPEN BRACE_CLOSE
+                        {
+                            strcpy($$, "");
+                        }
                 ;
 
 string_all:     IDENTIFIER
@@ -119,10 +123,6 @@ string_all:     IDENTIFIER
                 | IDENTIFIER string_all
                         {
                             sprintf($$, "%s %s", $1, $2);
-                        }
-                | /* empty */
-                        {
-                            strcpy($$, "");
                         }
                 ;
 
