@@ -1,5 +1,7 @@
 %{
 
+#include <string.h>
+#include "types.h"
 #include "y.tab.h"
 
 %}
@@ -8,13 +10,12 @@
 
 %%
 
-\@                      { return AMPERSAND; }
-\{                      { return BRACE_OPEN; }
-\}                      { return BRACE_CLOSE; }
-\=                      { return SYM_EQUAL; }
-\,                      { return SYM_COMMA; }
-[a-zA-Z_]+              { yylval.sval = yytext; return IDENTIFIER; }
-[0-9]+\.[0-9]*          { yylval.sval = yytext; return NUMBER; }
-.*                      { yylval.sval = yytext; return STRING; }
+"@"                     { return SYM_AMPERSAND; }
+"{"                     { return BRACE_OPEN; }
+"}"                     { return BRACE_CLOSE; }
+"="                     { return SYM_EQUAL; }
+","                     { return SYM_COMMA; }
+[a-zA-Z_0-9]+           { strcpy(yylval.sval, yytext); return IDENTIFIER; }
+[.\n]                   {}
 
 %%
