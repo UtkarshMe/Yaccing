@@ -15,7 +15,9 @@
 "}"                     { return BRACE_CLOSE; }
 "="                     { return SYM_EQUAL; }
 ","                     { return SYM_COMMA; }
-[a-zA-Z_0-9]+           { strcpy(yylval.sval, yytext); return IDENTIFIER; }
+"\""                    { return QUOTES; }
+[a-zA-Z0-9\!\$\&\*\+\-\.\/\:\;\<\>\?\[\]\^\_\‘\|]+ {
+                          strcpy(yylval.sval, yytext); return IDENTIFIER; }
 [.\n]                   {}
 
 %%

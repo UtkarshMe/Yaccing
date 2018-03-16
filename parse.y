@@ -20,7 +20,8 @@ int size = 0;
     Field       field_list[10];
 };
 
-%token  <ival>      SYM_AMPERSAND BRACE_OPEN BRACE_CLOSE SYM_COMMA SYM_EQUAL
+%token  <ival>      SYM_AMPERSAND SYM_COMMA SYM_EQUAL
+%token  <ival>      BRACE_OPEN BRACE_CLOSE QUOTES
 %token  <sval>      IDENTIFIER
 
 %type   <sval>      name key string string_all
@@ -107,6 +108,14 @@ string:         IDENTIFIER string
                             strcpy($$, $2);
                         }
                 | BRACE_OPEN BRACE_CLOSE
+                        {
+                            strcpy($$, "");
+                        }
+                | QUOTES string_all QUOTES
+                        {
+                            strcpy($$, $2);
+                        }
+                | QUOTES QUOTES
                         {
                             strcpy($$, "");
                         }
