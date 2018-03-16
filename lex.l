@@ -18,6 +18,6 @@
 "\""                    { return QUOTES; }
 [a-zA-Z0-9\!\$\&\*\+\-\.\/\:\;\<\>\?\[\]\^\_\‘\|]+ {
                           strcpy(yylval.sval, yytext); return IDENTIFIER; }
-[.\n]                   {}
+[.\n]                   { /* ignore */ }
 
 %%

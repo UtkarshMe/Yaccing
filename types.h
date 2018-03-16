@@ -2,27 +2,19 @@
 #define TYPES_H
 
 #define MAX_SIZE 100
+#define MAX_FIELDS 20
 
 typedef struct _Field Field;
 struct _Field{
     char        name[MAX_SIZE];
     char        value[MAX_SIZE];
-    Field       *next;
 };
-
-
-struct _Field_list{
-    Field       *top;
-    Field       *last;
-};
-typedef struct _Field_list Field_list;
-
 
 struct _Entry{
     char        *name;
     char        *key;
     int         size;
-    Field       fields[10];
+    Field       fields[MAX_FIELDS];
 };
 typedef struct _Entry Entry;
 
