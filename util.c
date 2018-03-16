@@ -6,7 +6,7 @@
 void entry_show(Entry entry)
 {
     printf("\n");
-    printf("Name\t: %s\n", entry.name);
+    printf("Type\t: %s\n", entry.name);
     printf("Key\t: %s\n", entry.key);
     printf("Fields\t: \n");
     for (int i = 0; i < entry.size; ++i) {
