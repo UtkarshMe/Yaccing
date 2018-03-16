@@ -3,6 +3,8 @@ _Stop yacking, start yaccing!_
 
 This is an example parser for BibTeX, made for the Compilers Construction
 course at BITS Goa.
+An accompanying blog post can be found
+[here](https://utkarshme.github.io/blog/milking-the-yacc/)
 
 ### What is what
     
