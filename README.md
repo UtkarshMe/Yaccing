@@ -1,6 +1,9 @@
 ## Learning Yacc/Bison
 _Stop yacking, start yaccing!_
 
+This is an example parser for BibTeX, made for the Compilers Construction
+course at BITS Goa.
+
 ### What is what
     
     parse.y         : define the grammar
