@@ -19,7 +19,9 @@ An accompanying blog post can be found
 ### How to
 ```bash
 $ make
-$ ./bibtex_parser
+$ ./bibtex_parser < testcases.txt
+$ # or
+$ make test
 ```
 
 ### Author

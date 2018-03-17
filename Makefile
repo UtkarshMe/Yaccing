@@ -26,7 +26,10 @@ ${PROGRAM}:		${OBJS}
 				${CC} ${C_FLAGS} -I${INCLUDE_DIR} -o $@ ${OBJS}
 
 
-.PHONY: 		clean
+.PHONY: 		test clean
+
+test: 			all
+				./${PROGRAM} < testcase.txt
 
 clean:
 				rm -f ${OBJS} *.o ${PROGRAM} y.* lex.yy.*
